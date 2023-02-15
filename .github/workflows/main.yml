@@ -9,7 +9,9 @@ on:
 
 jobs:
   build:
-    runs_on: ubuntu_latest
+
+    runs_on: ubuntu-latest
+
     strategy:
       matrix: 
         node-version: [16.x, 18.x]
