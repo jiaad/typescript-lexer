@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "jiad",
   "license": "MIT",
+  "scripts": {
+    "test": "yarn jest",
+    "dev": "nodemon src/index.ts"
+  },
   "devDependencies": {
     "@jest/globals": "^29.4.3",
     "@types/jest": "^29.4.0",
