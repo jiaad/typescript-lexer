@@ -19,7 +19,7 @@ type LexerType = {
 
 export class Lexer implements LexerType {
 	position: number = 0
-	readPosition: number = 1
+	readPosition: number = 0
 	char: string = ""
 
 	constructor(public input: string) {
@@ -56,8 +56,17 @@ export class Lexer implements LexerType {
 		return this.input.slice(position, this.position)
 	}
 
-	peekChar() {
+	peakChar() {
 		return this.input[this.readPosition]
+	}
+	readString() {
+		let position = this.position + 1
+		while (true) {
+			this.readChar()
+			if (this.char === '"' || this.char === "__END_OF_FILE__") break
+		}
+
+		return this.input.slice(position, this.position)
 	}
 
 	nextToken(): TokenStructureType {
@@ -65,7 +74,7 @@ export class Lexer implements LexerType {
 		this.skipWhiteSpaces()
 		switch (this.char) {
 			case Tokens.ASSIGN:
-				if (this.peekChar() === "=") {
+				if (this.peakChar() === "=") {
 					let ch: string = this.char
 					this.readChar()
 					tok = token(Tokens.EQUAL, ch + this.char)
@@ -74,7 +83,7 @@ export class Lexer implements LexerType {
 				}
 				break
 			case Tokens.BANG:
-				if (this.peekChar() === "=") {
+				if (this.peakChar() === "=") {
 					let char = this.char
 					this.readChar()
 					tok = token(Tokens.NOT_EQUAL, char + this.char)
@@ -123,8 +132,12 @@ export class Lexer implements LexerType {
 			case Tokens.MODULO:
 				tok = token(Tokens.MODULO, this.char)
 				break
+			case '"':
+				let value = this.readString()
+				tok = token(Tokens.STRING, value)
+				break
 			case "__END_OF_FILE__":
-				tok.TYPE = ""
+				tok.TYPE = Tokens.EOF
 				tok.VALUE = Tokens.EOF
 				break
 			default: {

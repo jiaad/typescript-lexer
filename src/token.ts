@@ -16,6 +16,7 @@ export function token(type: string, value: string) {
 export const Tokens = {
 	ILLEGAL: "ILLEGAL",
 	EOF: "EOF",
+	STRING: "STRING",
 
 	// IDENTIFIERS + LITERALLS
 	IDENT: "IDENT",
@@ -31,7 +32,7 @@ export const Tokens = {
 	SLASH: "/",
 	MODULO: "%",
 	LESS_THAN: "<",
-	GREATER_THAN: "<",
+	GREATER_THAN: ">",
 
 	// DELIMITERS
 	COMMA: ",",
@@ -52,16 +53,18 @@ export const Tokens = {
 	LET: "LET"
 }
 
+// type KEYWORDSType = {
+// 	fn: TokenType
+// 	let: TokenType
+// 	true: TokenType
+// 	false: TokenType
+// 	if: TokenType
+// 	else: TokenType
+// 	return: TokenType
+// }
 type KEYWORDSType = {
-	fn: TokenType
-	let: TokenType
-	true: TokenType
-	false: TokenType
-	if: TokenType
-	else: TokenType
-	return: TokenType
+	[key: string]: TokenType
 }
-
 const KEYWORDS: KEYWORDSType = {
 	fn: Tokens.FUNCTION,
 	let: Tokens.LET,
@@ -72,7 +75,7 @@ const KEYWORDS: KEYWORDSType = {
 	return: Tokens.RETURN
 }
 
-export function lookupIdentifier(value: string) {
+export function lookupIdentifier(value: TokenType) {
 	if (KEYWORDS[value]) {
 		return KEYWORDS[value]
 	}

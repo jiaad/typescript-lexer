@@ -13,14 +13,16 @@ function test() {
   4 / 2
   4 - 2
 
+  let jiad= "jiad est la"
+
   `
+	input = "let x = 5;"
 	let lexer = new Lexer(input)
 	while (true) {
 		let a = lexer.nextToken()
 		console.log(a)
 		if (a.VALUE === Tokens.EOF) break
 	}
-	console.log("END")
 }
 
 test()
