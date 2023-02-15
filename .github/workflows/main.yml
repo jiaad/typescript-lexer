@@ -4,21 +4,21 @@ on:
   push:
     branches: [master]
   pull_request: 
-  branches: [master]
+    branches: [master]
 
 
-  jobs:
-    build:
-      runs_on: ubuntu_latest
-      strategy:
-        matrix: 
-          node-version: [16.x, 18.x]
-      steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js {{ matrix.node-version}}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{matrix.node-version}}
-          cache: "yarn"
-      - run: yarn install
-      - run: yarn test
+jobs:
+  build:
+    runs_on: ubuntu_latest
+    strategy:
+      matrix: 
+        node-version: [16.x, 18.x]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js {{ matrix.node-version}}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{matrix.node-version}}
+        cache: "yarn"
+    - run: yarn install
+    - run: yarn test
